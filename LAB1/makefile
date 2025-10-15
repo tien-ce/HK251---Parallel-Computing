@@ -1,20 +1,28 @@
 # Compiler and flags
 CC = gcc # Compiler
-CFLAGS = -Wall -O0 -fopenmp # Compiler flags
-CFLAGS += -DDEBUG -DSEQUENCE # Additional flags for debugging and sequence mode
+CFLAGS = -Wall -O0 -fopenmp -g  # Compiler flags
+# CFLAGS += -DDEBUG  # Additional flags for debugging and sequence mode
+CFLAGS += -DPARALLEL_V1  # Additional flags for sequence mode
+CFLAGS += -DWRITEOUT # Additional flags for writing output matrix to file
 # Target executable
-TARGET = sequence_convolution
+TARGET = parallel_convolution_v1 # Name of the output executable
 
 # Source files
-SRCS = read_matrix.c sequence_convolution.c 
+SRCS = read_matrix.c convolution.c 
 
 # Object files
 OBJS = $(SRCS:.c=.o) # Convert .c files to .o files
 
 # Default target: build everything
 all: $(TARGET)
+	CFLAGS += -DSEQUENCE
 	@echo "build complete"
-
+paral_v1: CFLAGS += -DPARALLEL_V1
+paral_v1: $(TARGET)
+	@echo "build complete"
+paral_v2: CFLAGS += -DPARALLEL_V2
+paral_v2: $(TARGET)
+	@echo "build complete"		
 # Link object file into final executable
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^
