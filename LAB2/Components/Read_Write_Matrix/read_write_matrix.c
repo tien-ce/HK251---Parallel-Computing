@@ -9,7 +9,7 @@
     * @param read_matrix: pointer to the matrix to read (allocated in main)
     * @return: 0 if successful, -1 if error
 */
-int read_matrix (const char * filename, int *rows, int *cols, float ***read_matrix){
+int read_matrix(const char *filename, const int *rows, const int * cols, float ***matrix){
     FILE *file = fopen(filename, "r");
     if (file == NULL) {     // Check if file opened successfully
         perror ("Error opening file");
@@ -28,7 +28,7 @@ int read_matrix (const char * filename, int *rows, int *cols, float ***read_matr
         char *tmp = strtok (line, ","); // tokenlize the first element by ","
         int col_count = 0; // Track number of columns read
         while (tmp !=NULL && col_count < *cols) {
-            (*read_matrix)[row_count][col_count] = atof (tmp); // Convert string to float and store in matrix
+            (*matrix)[row_count][col_count] = atof (tmp); // Convert string to float and store in matrix
             tmp = strtok (NULL, ","); // Get the next token
             col_count++;
         }
@@ -65,7 +65,7 @@ int write_matrix (const char *filename, int rows, int cols, float ***matrix){
     fclose(file);
     return 0;   // Return success
 }
-int read_matrix1D (const char * filename, int *rows, int *cols, float *matrix){
+int read_matrix1D(const char *filename, const int *rows, const int * cols, float *matrix){
     FILE *file = fopen(filename, "r");
     if (file == NULL) {     // Check if file opened successfully
         perror ("Error opening file");

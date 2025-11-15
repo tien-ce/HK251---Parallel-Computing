@@ -1,7 +1,7 @@
 #include "pde.h"
 // --- Term 1: Advection (Wind Effect) ---
 float calculate_advection(float C_ij, float C_i_jm1, float C_im1_j, 
-                           float ux, float uy, float dx, float dy) {
+                           const float ux, const float uy, const float dx, const float dy) {
     // Formula: Advection Flux = ux * (C[i][j] - C[i][j-1]) / dx + uy * (C[i][j] - C[i-1][j]) / dy
     // Term for dC/dt is: - (Advection Flux)
 
@@ -17,7 +17,7 @@ float calculate_advection(float C_ij, float C_i_jm1, float C_im1_j,
 
 // --- Term 2: Diffusion (Spreading Effect) ---
 float calculate_diffusion(float C_ij, float C_ip1_j, float C_im1_j, float C_i_jp1, float C_i_jm1, 
-                           float D, float dx, float dy) {
+                           const float D, const float dx, const float dy) {
     // Discrete Laplacian: 
     // differentiation^2 C = (C[i][j+1] - 2*C[i][j] + C[i][j-1]) / dx^2 
     //           + (C[i+1][j] - 2*C[i][j] + C[i-1][j]) / dy^2
@@ -33,7 +33,7 @@ float calculate_diffusion(float C_ij, float C_ip1_j, float C_im1_j, float C_i_jp
 }
 
 // --- Term 3: Decay (Fading Effect) ---
-float calculate_decay(float C_ij, float lambda, float k) {
+float calculate_decay(const float C_ij, const float lambda, const float k) {
     // Formula: Decay Term = - (lambda + k) * C[i][j]
     
     float DecayRate = lambda + k;
@@ -42,7 +42,7 @@ float calculate_decay(float C_ij, float lambda, float k) {
 }
 
 // --- Final Update Function ---
-float update_concentration(float C_old, float dC_dt, float dt) {
+float update_concentration(float C_old, float dC_dt, const float dt) {
     // Final iterative formula: C_new = C_old + dt * (dC/dt)
     
     float C_new = C_old + dt * dC_dt;

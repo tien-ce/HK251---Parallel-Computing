@@ -12,7 +12,7 @@
  * @return The Advection term contribution to dC/dt.
  */
 float calculate_advection(float C_ij, float C_i_jm1, float C_im1_j, 
-                           float ux, float uy, float dx, float dy);
+                           const float ux, const float uy, const float dx, const float dy);
 
 /**
  * @brief Calculates the Diffusion term (Term 2: D*differentiation^2 C) using the Discrete Laplacian.
@@ -27,7 +27,7 @@ float calculate_advection(float C_ij, float C_i_jm1, float C_im1_j,
  * @return The Diffusion term contribution to dC/dt.
  */
 float calculate_diffusion(float C_ij, float C_ip1_j, float C_im1_j, float C_i_jp1, float C_i_jm1, 
-                           float D, float dx, float dy);
+                           const float D, const float dx, const float dy);
 
 /**
  * @brief Calculates the Decay/Deposition term (Term 3: -(lambda+k)*C).
@@ -36,7 +36,7 @@ float calculate_diffusion(float C_ij, float C_ip1_j, float C_im1_j, float C_i_jp
  * @param k Deposition rate.
  * @return The Decay term contribution to dC/dt.
  */
-float calculate_decay(float C_ij, float lambda, float k);
+float calculate_decay(const float C_ij, const float lambda, const float k);
 
 /**
  * @brief Calculates the new concentration C_new based on the old value and dC/dt.
@@ -45,5 +45,5 @@ float calculate_decay(float C_ij, float lambda, float k);
  * @param dt Time step size.
  * @return The new cell concentration C_new at t_new (guaranteed non-negative).
  */
-float update_concentration(float C_old, float dC_dt, float dt);
+float update_concentration(float C_old, float dC_dt, const float dt);
 #endif //PDE_H
