@@ -11,15 +11,15 @@ file(GLOB COMPONENT_BASE_DIRS
 
 
 
-project(consequence C) # Explicitly specify language for clarity
+project(sequence C) # Explicitly specify language for clarity
 
 # Define the executable target
-add_executable(consequence main/main.c)
+add_executable(sequence main/main.c)
 
 # 1. Include Directories
 foreach(DIR ${COMPONENT_BASE_DIRS})
     # Append the "Include" subdirectory path to our final list
-    target_include_directories(consequence 
+    target_include_directories(sequence 
     PRIVATE "${DIR}/Include" 
     )
 endforeach()
@@ -27,21 +27,21 @@ endforeach()
 # 2. Link Directories
 foreach(DIR ${COMPONENT_BASE_DIRS})
     # Append the "Include" subdirectory path to our final list
-    target_link_directories(consequence 
+    target_link_directories(sequence 
         PRIVATE "${DIR}/build"
     )
 endforeach()
 
 
 # 3. Link Libraries
-target_link_libraries(consequence PRIVATE pde read_write_matrix -lm)
+target_link_libraries(sequence PRIVATE pde read_write_matrix -lm)
 
 # 4. Find and Link Optional Libraries (MPI)
 find_package(MPI)
 if(MPI_FOUND)
-    # CORRECTED TARGET NAME: Link MPI to 'consequence'
-    target_link_libraries(consequence PRIVATE MPI::MPI_C)
-    message(STATUS "MPI found and linked to consequence target.")
+    # CORRECTED TARGET NAME: Link MPI to 'sequence'
+    target_link_libraries(sequence PRIVATE MPI::MPI_C)
+    message(STATUS "MPI found and linked to sequence target.")
 else()
-    message(WARNING "MPI not found. consequence will be built without MPI support.")
+    message(WARNING "MPI not found. sequence will be built without MPI support.")
 endif() 
