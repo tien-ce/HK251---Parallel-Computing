@@ -23,10 +23,10 @@ int main(int argc, char **argv){
         return -1;
     }
     printf ("Matrix read successfully from file %s with dimensions %dx%d, interation %d\n", in_path, rows, cols, iterations);
-    // Timer and main loop
+    // Timer
     float start_time = MPI_Wtime();
     
-    // 2. MAIN TIME LOOP (100 iterations)
+    // 2. MAIN LOOP ( iterations)
     for (int t = 0; t < iterations; t++) {
         
         // 3. SPATIAL LOOP: Calculate new values for every internal cell
