@@ -4,9 +4,9 @@ const char *out_path = "../../Output/out_radioactive_matrix_paral.csv";
 const int rows = 4000;
 const int cols = 4000;
 int iterations = 400;
-// One point represent 100 meters
-const int dx = 100; 
-const int dy = 100;
+// One point represent 100 meters (10x10)
+const int dx = 10; 
+const int dy = 10;
 //  Time step : 1 second
 const float dt = 1;
 // Wind velocity    
