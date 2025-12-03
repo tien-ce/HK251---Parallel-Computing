@@ -57,7 +57,9 @@ dkms.conf
 
 #Input, output
 input/
+Input/
 output/
+Output/
 
 #Vscode
 .vscode/
