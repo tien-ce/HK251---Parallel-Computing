@@ -24,7 +24,7 @@ int main (int argc, char* argv[]){
     time_t start_time = time(0);
     
     // 2. MAIN LOOP ( iterations)
-    for (int t = 0; t < iterations; t++){
+    for (int t = 1; t < iterations + 1; t++){   // From 1 -> 101
         // Traverse the array
         for (int i = 0; i < rows; i++){
             for (int j = 0; j < cols; j++){

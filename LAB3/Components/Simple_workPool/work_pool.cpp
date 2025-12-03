@@ -7,6 +7,7 @@
 
 void TaskQueue::enqueue (Task* task){
     std::lock_guard<std::mutex> lock (this->mtx);
+    this->running_tasks_count++;
     this->queue.push (task);
 }
 
@@ -34,7 +35,32 @@ TaskQueue* TaskQueue::get(){
     return instance;
 }
 
+/**
+ * @brief   notify_task_finished (Synchronization Signal)
+ */
+void TaskQueue::notify_task_finished() {
+    this->running_tasks_count--; // Decrement the count
+    std::unique_lock<std::mutex> lock(this->mtx); 
 
+    // If the counter hits zero, notify the waiting main thread.
+    if (this->running_tasks_count.load() == 0) {
+        // Need a lock to use the condition variable
+        this->completion_cv.notify_one(); 
+    }
+} 
+
+/**
+ * @brief wait_for_batch_completion (Main Thread Wait)
+ */
+void TaskQueue::wait_for_batch_completion() {
+    std::unique_lock<std::mutex> lock(this->mtx);
+    
+    // The main thread sleeps until the counter is zero.
+    // Use wait() with a lambda predicate to protect against spurious wakeups.
+    completion_cv.wait(lock, [this] { 
+        return running_tasks_count.load() == 0; 
+    });
+}
 
 /**
  * @brief This function creates a new thread which is a instance for the run function of a specific worker
@@ -50,7 +76,8 @@ void Worker::run() {
     while (!this->stop){
         Task* task = TaskQueue::get()->dequeue();   // Get the task fronted of the task queue
         if (task != nullptr){
-            printf ("Worker %d executes task %d\n", this->id, task->task_id);
+            task->func(task->parameters);
+            TaskQueue::get()->notify_task_finished();   // Notify that task is finished
             delete task;
         }
         else {
