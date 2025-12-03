@@ -5,7 +5,7 @@ import os
 
 # --- Configuration ---
 INPUT_FILE = '../Input/blast_matrix.csv'  
-OUTPUT_FILE = '../Output/seq_blast_matrix.csv' 
+OUTPUT_FILE = '../Output/parl_blast_matrix.csv' 
 DELIMITER = ','                  
 MAP_SIZE = 4000 # The full dimension of the matrix
 CELL_SIZE_METERS = 10 # 10 meters per cell
@@ -14,7 +14,7 @@ CELL_SIZE_METERS = 10 # 10 meters per cell
 # You are working on a 4000x4000 matrix. 
 # Set TARGET_SIZE to 4000 to view the whole map.
 # Set it lower (e.g., 200) to zoom into the center around the blast.
-TARGET_SIZE = 1000 
+TARGET_SIZE = 2000 
 VISUAL_ROWS = TARGET_SIZE
 VISUAL_COLS = TARGET_SIZE 
 
